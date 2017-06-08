@@ -31,6 +31,9 @@ public class MyReceiver extends BroadcastReceiver {
         {
             String msg = b.getString("msg");
             Toast.makeText(context, msg, Toast.LENGTH_LONG).show();
+
+            NewMessageNotification n=new NewMessageNotification();
+            n.notify(context,msg,52);
         }
         if (intent.getAction().equalsIgnoreCase("android.provider.Telephony.SMS_RECEIVED")) {
             if (b != null) {

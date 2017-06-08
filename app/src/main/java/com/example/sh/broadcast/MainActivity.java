@@ -12,11 +12,21 @@ import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
 
+    Intent intentService;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
         CheckUserPermsions();
+
+        if(!MyService.IsRunning){
+            Toast.makeText(this, "hi", Toast.LENGTH_LONG).show();
+             MyService.IsRunning = true;
+             intentService=new Intent(this,MyService.class);
+             intentService.putExtra("a","mymessage");
+             startService(intentService);
+        }
     }
 
     public void buBroadcast(View view) {
@@ -24,6 +34,11 @@ public class MainActivity extends AppCompatActivity {
         intent.setAction("com.example.Broadcast");
         intent.putExtra("msg","This is finally happening");
         sendBroadcast(intent);
+
+        if(MyService.IsRunning){
+            MyService.IsRunning=false;
+            stopService(intentService);
+        }
     }
 
 
